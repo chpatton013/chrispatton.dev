@@ -52,3 +52,12 @@
     state: started
     enabled: yes
   become: yes
+
+- name: Install Nginx Certbot post-deploy hook
+  copy:
+    src: nginx-post-deploy.sh
+    dest: /etc/letsencrypt/renewal-hooks/deploy/nginx.sh
+    owner: root
+    group: root
+    mode: 744
+  become: yes
