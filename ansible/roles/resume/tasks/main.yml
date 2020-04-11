@@ -19,7 +19,7 @@
     force: yes
   become: yes
   notify:
-  - Restart Nginx service
+  - Reload Nginx service
 
 - name: Render resume nginx config file
   template:
@@ -30,7 +30,7 @@
     mode: 0644
   become: yes
   notify:
-  - Restart Nginx service
+  - Reload Nginx service
 
 - name: Enable resume site
   file:
@@ -43,4 +43,4 @@
     mode: 0777
   become: yes
   notify:
-  - Restart Nginx service
+  - Reload Nginx service

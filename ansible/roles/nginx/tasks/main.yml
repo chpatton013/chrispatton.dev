@@ -44,7 +44,7 @@
     mode: 644
   become: yes
   notify:
-  - Restart Nginx service
+  - Reload Nginx service
 
 - name: Start and Enable Nginx service
   systemd:

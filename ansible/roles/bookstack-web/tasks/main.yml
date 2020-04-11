@@ -52,7 +52,7 @@
     mode: 0644
   become: yes
   notify:
-  - Restart Nginx service
+  - Reload Nginx service
 
 - name: Enable bookstack site
   file:
@@ -65,4 +65,4 @@
     mode: 0777
   become: yes
   notify:
-  - Restart Nginx service
+  - Reload Nginx service
