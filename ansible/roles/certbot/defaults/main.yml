@@ -1,0 +1,3 @@
+---
+
+certbot_ssl_dir: /etc/letsencrypt/live/{{certbot_domain}}

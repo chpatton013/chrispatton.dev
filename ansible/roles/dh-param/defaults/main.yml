@@ -1,0 +1,4 @@
+---
+
+dh_param_file: /etc/ssl/private/dhparam.pem
+dh_param_size: 4096

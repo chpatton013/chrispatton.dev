@@ -1,0 +1,8 @@
+---
+
+- name: Create DH Param file
+  command:
+    cmd: >
+      openssl dhparam -out {{dh_param_file}} {{dh_param_size}}
+    creates: "{{dh_param_file}}"
+  become: yes

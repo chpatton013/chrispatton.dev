@@ -1,0 +1,73 @@
+---
+
+- name: Install Certbot packages
+  pacman:
+    name:
+    - certbot
+    - certbot-apache
+    - certbot-dns-cloudflare
+    - certbot-dns-cloudxns
+    - certbot-dns-digitalocean
+    - certbot-dns-dnsimple
+    - certbot-dns-dnsmadeeasy
+    - certbot-dns-gehirn
+    - certbot-dns-google
+    - certbot-dns-linode
+    - certbot-dns-luadns
+    - certbot-dns-nsone
+    - certbot-dns-ovh
+    - certbot-dns-rfc2136
+    - certbot-dns-route53
+    - certbot-dns-sakuracloud
+    - certbot-nginx
+  become: yes
+
+- name: Register Certbot account
+  command:
+    cmd: >
+      certbot register --non-interactive
+        --agree-tos --email {{certbot_account_email}}
+    creates: /etc/letsencrypt/accounts
+  become: yes
+
+- name: Copy Certbot credentials
+  copy:
+    src: "{{certbot_credentials_file}}"
+    dest: /root/certbot-credentials.ini
+    owner: root
+    group: root
+    mode: 0600
+  become: yes
+
+# TODO: Add --hsts and --uir flags.
+- name: Create Certbot key
+  command:
+    cmd: >
+      certbot certonly
+        --rsa-key-size=4096 --staple-ocsp --must-staple
+        {{certbot_key_arguments}}
+        --domains '{{certbot_domain}},*.{{certbot_domain}}'
+    creates: "{{certbot_ssl_dir}}"
+  become: yes
+
+- name: Install Certbot Renewal service and timer
+  copy:
+    src: "{{item}}"
+    dest: "/etc/systemd/system/{{item}}"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  with_items:
+  - certbot-renew.service
+  - certbot-renew.timer
+  notify:
+  - Reload Systemd daemon
+  - Restart Certbot Renewal timer
+
+- name: Start and enable Certbot Renewal timer
+  systemd:
+    name: certbot-renew.timer
+    state: started
+    enabled: yes
+  become: yes

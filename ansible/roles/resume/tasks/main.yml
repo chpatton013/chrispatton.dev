@@ -1,0 +1,46 @@
+---
+
+- name: Create resume content directory
+  file:
+    path: "{{resume_root}}"
+    state: directory
+    owner: http
+    group: http
+    mode: 0755
+  become: yes
+
+- name: Download resume repository
+  get_url:
+    url: "{{resume_url}}"
+    dest: "{{resume_root}}/index.html"
+    owner: http
+    group: http
+    mode: 0644
+    force: yes
+  become: yes
+  notify:
+  - Restart Nginx service
+
+- name: Render resume nginx config file
+  template:
+    src: resume.conf
+    dest: "{{nginx_sites_available_dir}}/resume.conf"
+    owner: http
+    group: http
+    mode: 0644
+  become: yes
+  notify:
+  - Restart Nginx service
+
+- name: Enable resume site
+  file:
+    src: "{{nginx_sites_available_dir}}/resume.conf"
+    path: "{{nginx_sites_enabled_dir}}/resume.conf"
+    state: link
+    force: yes
+    owner: http
+    group: http
+    mode: 0777
+  become: yes
+  notify:
+  - Restart Nginx service

@@ -1,0 +1,7 @@
+---
+
+- name: Restart Bookstack service
+  systemd:
+    name: bookstack.service
+    state: restarted
+  become: yes

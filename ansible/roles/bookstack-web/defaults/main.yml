@@ -1,0 +1,8 @@
+---
+
+bookstack_web_config_dir: /etc/bookstack
+bookstack_web_log_dir: /var/log/bookstack
+bookstack_web_www_dir: /var/www/bookstack
+bookstack_web_docker_image: linuxserver/bookstack
+bookstack_web_env_file: /root/bookstack.env
+bookstack_web_port: 8000

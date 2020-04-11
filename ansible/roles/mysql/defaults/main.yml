@@ -1,0 +1,5 @@
+---
+
+mysql_user: mysql
+mysql_basedir: /usr
+mysql_datadir: /var/lib/mysql

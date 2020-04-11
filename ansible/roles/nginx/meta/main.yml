@@ -1,0 +1,6 @@
+---
+
+dependencies:
+- certbot
+- dh-param
+- pacman

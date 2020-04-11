@@ -1,0 +1,48 @@
+---
+
+_nginx_config_dir: /etc/nginx
+nginx_user: http
+nginx_group: http
+nginx_worker_processes: auto
+nginx_worker_connections: 1024
+nginx_access_log_file: /var/log/nginx/access.log
+nginx_error_log_file: /var/log/nginx/error.log
+nginx_keepalive_timeout: 75
+nginx_types_hash_max_size: 4096
+nginx_server_names_hash_max_size: 1024
+nginx_ssl_protocols:
+- TLSv1.3
+nginx_ssl_ciphers:
+- TLS_AES_128_GCM_SHA256
+- TLS_AES_256_GCM_SHA384
+- TLS_CHACHA20_POLY1305_SHA256
+- ECDHE-ECDSA-AES128-GCM-SHA256
+- ECDHE-RSA-AES128-GCM-SHA256
+- ECDHE-ECDSA-AES256-GCM-SHA384
+- ECDHE-RSA-AES256-GCM-SHA384
+- ECDHE-ECDSA-CHACHA20-POLY1305
+- ECDHE-RSA-CHACHA20-POLY1305
+- DHE-RSA-AES128-GCM-SHA256
+- DHE-RSA-AES256-GCM-SHA384
+
+nginx_ssl_session_cache: shared:SSL:10m
+nginx_ssl_session_timeout: 10m
+nginx_ssl_dir: "{{_nginx_config_dir}}/ssl"
+nginx_ssl_dhparam: "{{nginx_ssl_dir}}/dhparam.pem"
+nginx_ssl_certificate: "{{nginx_ssl_dir}}/cert.pem"
+nginx_ssl_certificate_key: "{{nginx_ssl_dir}}/cert.key"
+nginx_ssl_trusted_certificate: "{{nginx_ssl_dir}}/trust.pem"
+nginx_ssl_hsts_max_age: 31536000
+nginx_gzip_compression_level: 4
+nginx_gzip_minimum_length: 1024
+nginx_gzip_mime_types:
+- application/javascript
+- application/json
+- application/xml
+- application/xml+rss
+- text/css
+- text/javascript
+- text/plain
+- text/xml
+nginx_sites_available_dir: "{{_nginx_config_dir}}/sites-available"
+nginx_sites_enabled_dir: "{{_nginx_config_dir}}/sites-enabled"

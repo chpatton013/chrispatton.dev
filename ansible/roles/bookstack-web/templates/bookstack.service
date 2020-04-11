@@ -1,0 +1,21 @@
+[Unit]
+Description=Bookstack docker container
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=docker run \
+  --name=bookstack_web \
+  --env-file {{bookstack_web_env_file}} \
+  --publish {{bookstack_web_port}}:80 \
+  --volume {{bookstack_web_config_dir}}:/config \
+  --volume {{bookstack_web_log_dir}}:/config/log \
+  --volume {{bookstack_web_www_dir}}:/config/www \
+  --init \
+  --rm \
+  {{bookstack_web_docker_image}}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

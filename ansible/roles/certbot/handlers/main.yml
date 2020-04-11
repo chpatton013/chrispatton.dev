@@ -1,0 +1,7 @@
+---
+
+- name: Restart Certbot Renewal timer
+  systemd:
+    name: certbot-renew.timer
+    state: restarted
+  become: yes

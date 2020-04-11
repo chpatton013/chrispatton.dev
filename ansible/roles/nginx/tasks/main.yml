@@ -1,0 +1,54 @@
+---
+
+- name: Install Nginx package
+  pacman:
+    name: nginx
+  become: yes
+
+- name: Make Nginx config directories
+  file:
+    path: "{{item}}"
+    state: directory
+  become: yes
+  with_items:
+  - "{{nginx_ssl_dir}}"
+  - "{{nginx_sites_available_dir}}"
+  - "{{nginx_sites_enabled_dir}}"
+
+- name: Link Nginx SSL files
+  file:
+    src: "{{item.src}}"
+    path: "{{item.dest}}"
+    owner: http
+    group: http
+    mode: 0777
+    state: link
+    force: yes
+  become: yes
+  with_items:
+  - src: "{{dh_param_file}}"
+    dest: "{{nginx_ssl_dhparam}}"
+  - src: "{{certbot_ssl_dir}}/fullchain.pem"
+    dest: "{{nginx_ssl_certificate}}"
+  - src: "{{certbot_ssl_dir}}/privkey.pem"
+    dest: "{{nginx_ssl_certificate_key}}"
+  - src: "{{certbot_ssl_dir}}/fullchain.pem"
+    dest: "{{nginx_ssl_trusted_certificate}}"
+
+- name: Render Nginx config file
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Restart Nginx service
+
+- name: Start and Enable Nginx service
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+  become: yes

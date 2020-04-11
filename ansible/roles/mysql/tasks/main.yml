@@ -1,0 +1,58 @@
+---
+
+- name: Install MySQL package
+  pacman:
+    name: mariadb
+  become: yes
+
+- name: Run first-time MariaDB setup
+  shell:
+    cmd: >
+      mariadb-install-db \
+        --user={{mysql_user}} \
+        --basedir={{mysql_basedir}} \
+        --datadir={{mysql_datadir}} \
+      && touch /usr/local/lib/mariadb-install-db.marker
+    creates: /usr/local/lib/mariadb-install-db.marker
+  become: yes
+
+- name: Copy MySQL config files
+  copy:
+    src: "{{item}}"
+    dest: /etc/my.cnf.d/{{item}}
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  with_items:
+  - client.cnf
+  - mysql-clients.cnf
+  - server.cnf
+  notify:
+  - Restart MySQL service
+
+- name: Start and Enable MySQL service
+  systemd:
+    name: mysqld
+    state: started
+    enabled: yes
+  become: yes
+
+# Non-interactive replacement for `mysql_secure_installation`.
+- name: Harden MySQL setup
+  shell:
+    cmd: >
+        mysql --user=root --password= \
+        && touch /usr/local/lib/mysql-secure-install.marker
+    stdin: "{{lookup('file', 'mysql-secure-install.sql')}}"
+    creates: /usr/local/lib/mysql-secure-install.marker
+  become: yes
+
+- name: Populate MySQL timezone info tables
+  shell:
+    cmd: >
+      mysql_tzinfo_to_sql /usr/share/zoneinfo | \
+        mysql --user=root --password= mysql \
+      && touch /usr/local/lib/mysql-timezone-info.marker
+    creates: /usr/local/lib/mysql-timezone-info.marker
+  become: yes

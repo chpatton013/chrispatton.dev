@@ -1,0 +1,7 @@
+[Unit]
+Description=Renew Certbot certificates that are near expiry
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=sleep $(( ($RANDOM % (60 * 60 * 6)) + 1 )) && /usr/bin/certbot renew
