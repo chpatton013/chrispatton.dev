@@ -1,0 +1,15 @@
+---
+
+- name: Install AUR build packages
+  pacman:
+    name:
+    - base-devel
+  become: yes
+
+- name: Create AUR build root
+  file:
+    path: /opt/aur/
+    state: directory
+    owner: nobody
+    group: nobody
+  become: yes
