@@ -2,7 +2,8 @@
 
 - name: Install Docker packages
   pacman:
-    name: docker
+    name:
+    - docker
   become: yes
 
 - name: Start and Enable Docker service

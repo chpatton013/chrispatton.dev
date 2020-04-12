@@ -4,7 +4,6 @@
   pacman:
     name:
     - certbot
-    - certbot-apache
     - certbot-dns-cloudflare
     - certbot-dns-cloudxns
     - certbot-dns-digitalocean
@@ -25,8 +24,9 @@
 - name: Register Certbot account
   command:
     cmd: >
-      certbot register --non-interactive
-        --agree-tos --email {{certbot_account_email}}
+      certbot register
+        --non-interactive --agree-tos
+        {{certbot_register_arguments}}
     creates: /etc/letsencrypt/accounts
   become: yes
 
@@ -45,8 +45,8 @@
     cmd: >
       certbot certonly
         --rsa-key-size=4096 --staple-ocsp --must-staple
-        {{certbot_key_arguments}}
-        --domains '{{certbot_domain}},*.{{certbot_domain}}'
+        {{certbot_certonly_arguments}}
+        --domains "{{certbot_domains|join(',')}}"
     creates: "{{certbot_ssl_dir}}"
   become: yes
 

@@ -20,7 +20,8 @@ class Machine
     config.vm.define @name do |machine_config|
       machine_config.vm.box = @box
       machine_config.vm.hostname = @hostname
-      machine_config.vm.network "private_network", ip: @static_ip
+      machine_config.vm.network :private_network, ip: @static_ip
+      machine_config.vm.network :forwarded_port, guest: 22, host: 2222, auto_correct: true
       yield machine_config
     end
   end
@@ -52,6 +53,10 @@ Vagrant.configure("2") do |config|
 
     machine.define config do |machine_config|
       machine_config.vm.provision :shell, path: "vagrant/provision.sh"
+      machine_provision_script = "vagrant/provision.#{machine.name}.sh"
+      if File.file?(machine_provision_script)
+        machine_config.vm.provision :shell, path: machine_provision_script
+      end
 
       # Do not run Ansible provisioning until the last machine so we can connect
       # to all of them in parallel.
@@ -65,8 +70,9 @@ Vagrant.configure("2") do |config|
 
           ansible.playbook = "ansible/provision.playbook.yml"
           ansible.groups = ANSIBLE_GROUPS
-          ansible.extra_vars = "vagrant/vars.yml"
+          ansible.extra_vars = "@vagrant/vars.yml"
           ansible.raw_ssh_args = ANSIBLE_RAW_SSH_ARGS
+          ansible.raw_arguments = "--extra-vars=vagrant_vars_dir=#{__dir__}/vagrant"
         end
       end
     end
