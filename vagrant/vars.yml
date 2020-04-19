@@ -1,5 +1,6 @@
 ---
 
+rankmirror_timeout: "0.5"
 domain: example.com
 
 bookstack_db_host: 10.0.0.31
