@@ -1,0 +1,8 @@
+---
+
+dependencies:
+- ca-certificates
+- certbot
+- dh-param
+- fail2ban
+- pacman

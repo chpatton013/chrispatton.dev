@@ -1,0 +1,4 @@
+---
+
+ca_certificates_dir: /etc/ssl/certs
+ca_certificates_file: /etc/ssl/cert.pem

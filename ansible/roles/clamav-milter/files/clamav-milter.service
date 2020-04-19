@@ -1,0 +1,15 @@
+[Unit]
+Description=Mail filter for ClamAV
+After=syslog.target
+After=local-fs.target
+After=network.target
+After=clamav-daemon.service
+Before=sendmail.service
+Before=postfix.service
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/clamav-milter --config-file /etc/clamav/clamav-milter.conf
+
+[Install]
+WantedBy=multi-user.target

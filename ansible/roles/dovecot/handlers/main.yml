@@ -1,0 +1,7 @@
+---
+
+- name: Restart Dovecot service
+  systemd:
+    name: dovecot.service
+    state: restarted
+  become: yes

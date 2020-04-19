@@ -24,3 +24,19 @@ certbot_certonly_arguments: ""
 
 resume_url: https://raw.githubusercontent.com/chpatton013/resume/master/index.html
 resume_domain: "resume.{{domain}}"
+
+mail_user: vagrant
+
+opendkim_selector: mail
+opendkim_input_public_key_file: "{{vagrant_vars_dir}}/opendkim-mail.txt"
+opendkim_input_private_key_file: "{{vagrant_vars_dir}}/opendkim-mail.private"
+
+dovecot_input_passwd_file: "{{vagrant_vars_dir}}/dovecot-passwd"
+
+postfix_hostname: "vagrant.{{domain}}"
+
+clamd_host: "10.0.0.51"
+clamd_port: "3310"
+
+spamd_host: "10.0.0.51"
+spamd_port: "783"

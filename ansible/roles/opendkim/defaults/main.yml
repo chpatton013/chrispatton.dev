@@ -1,0 +1,8 @@
+---
+
+opendkim_tmp_dir: /tmp/opendkim
+opendkim_pid_path: "{{opendkim_run_dir}}/opendkim.pid"
+opendkim_etc_dir: /etc/opendkim
+opendkim_public_key_file: "{{opendkim_etc_dir}}/{{opendkim_selector}}.txt"
+opendkim_private_key_file: "{{opendkim_etc_dir}}/{{opendkim_selector}}.private"
+opendkim_domain_key: "{{opendkim_selector}}._domainkey.{{domain}}"

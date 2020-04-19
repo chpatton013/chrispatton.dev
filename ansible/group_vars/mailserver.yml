@@ -1,0 +1,13 @@
+---
+
+opendkim_run_dir: /run/opendkim
+opendkim_socket_path: "{{opendkim_run_dir}}/opendkim.sock"
+
+spamass_milter_run_dir: /run/spamass-milter
+spamass_milter_socket_path: "{{spamass_milter_run_dir}}/spamass-milter.sock"
+
+clamav_milter_run_dir: /run/clamav
+clamav_milter_socket_path: "{{clamav_milter_run_dir}}/clamav-milter.sock"
+
+dovecot_run_dir: /run/dovecot
+dovecot_socket_path: "{{dovecot_run_dir}}/dovecot.sock"

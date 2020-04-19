@@ -63,7 +63,6 @@ Vagrant.configure("2") do |config|
       if machine_index == MACHINES.length - 1
         machine_config.vm.provision :ansible do |ansible|
           ansible.verbose = true
-          ansible.raw_arguments = ["-v"]
 
           # Provision all machines in parallel.
           ansible.limit = "all"
@@ -72,7 +71,10 @@ Vagrant.configure("2") do |config|
           ansible.groups = ANSIBLE_GROUPS
           ansible.extra_vars = "@vagrant/vars.yml"
           ansible.raw_ssh_args = ANSIBLE_RAW_SSH_ARGS
-          ansible.raw_arguments = "--extra-vars=vagrant_vars_dir=#{__dir__}/vagrant"
+          ansible.raw_arguments = [
+            "-v",
+            "--extra-vars=vagrant_vars_dir=#{__dir__}/vagrant",
+          ]
         end
       end
     end

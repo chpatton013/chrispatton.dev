@@ -1,0 +1,87 @@
+---
+
+- name: Install Postfix packages
+  pacman:
+    name:
+    - gcc
+    - libmilter
+    - postfix
+  become: yes
+
+- name: Render Postfix aliases file
+  template:
+    src: aliases
+    dest: /etc/postfix/aliases
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  register: render_postfix_aliases_file
+
+- name: Generate Postfix aliases
+  command:
+    cmd: postalias /etc/postfix/aliases
+  become: yes
+  when: render_postfix_aliases_file.changed
+  notify:
+  - Restart Postfix service
+
+- name: Render Postfix database files
+  template:
+    src: "{{item}}"
+    dest: /etc/postfix/{{item}}
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  with_items:
+  - virtual
+  - virtual_mailbox_domains
+  - virtual_mailbox_maps
+  register: render_postfix_database_files
+
+- name: Generate Postfix databases
+  command:
+    cmd: postmap /etc/postfix/{{item.item}}
+  become: yes
+  when: item.changed
+  loop: "{{render_postfix_database_files.results}}"
+  notify:
+  - Restart Postfix service
+
+- name: Render Postfix config files
+  template:
+    src: "{{item}}"
+    dest: /etc/postfix/{{item}}
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  with_items:
+  - main.cf
+  - master.cf
+  notify:
+  - Restart Postfix service
+
+- name: Validate Postfix configuration
+  command:
+    cmd: postfix check
+  become: yes
+
+- name: Start Postfix service
+  systemd:
+    name: postfix
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Install Fail2Ban jail config
+  copy:
+    src: fail2ban.local
+    dest: "{{fail2ban_jail_dir}}/postfix.local"
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Restart Fail2Ban service

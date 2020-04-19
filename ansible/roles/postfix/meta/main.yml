@@ -1,0 +1,10 @@
+---
+dependencies:
+- ca-certificates
+- certbot
+- clamav-milter
+- dovecot
+- fail2ban
+- opendkim
+- pacman
+- spamass-milter

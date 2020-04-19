@@ -1,0 +1,5 @@
+---
+clamav_milter_pid_path: "{{clamav_milter_run_dir}}/clamav-milter.pid"
+clamav_milter_tmp_dir: /tmp/clamav
+clamav_milter_log_dir: /var/log/clamav
+clamav_milter_log_path: "{{clamav_milter_log_dir}}/clamav-milter.log"

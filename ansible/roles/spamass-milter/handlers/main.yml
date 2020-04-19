@@ -1,0 +1,7 @@
+---
+
+- name: Restart Spamass-Milter service
+  systemd:
+    name: spamass-milter.service
+    state: restarted
+  become: yes

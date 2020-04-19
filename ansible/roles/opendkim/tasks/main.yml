@@ -1,0 +1,53 @@
+---
+
+- name: Install OpenDKIM packages
+  pacman:
+    name:
+    - opendkim
+  become: yes
+
+- name: Render OpenDKIM config files
+  template:
+    src: "{{item}}"
+    dest: /etc/opendkim/{{item}}
+    owner: root
+    group: root
+    mode: 600
+  become: yes
+  with_items:
+  - KeyTable
+  - SigningTable
+  - TrustedHosts
+  - opendkim.conf
+  notify:
+  - Restart OpenDKIM service
+
+- name: Copy OpenDKIM key files
+  copy:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  with_items:
+  - {src: "{{opendkim_input_public_key_file}}", dest: "{{opendkim_public_key_file}}"}
+  - {src: "{{opendkim_input_private_key_file}}", dest: "{{opendkim_private_key_file}}"}
+  notify:
+  - Restart OpenDKIM service
+
+- name: Create OpenDKIM socket directory
+  file:
+    path: "{{opendkim_run_dir}}"
+    state: directory
+    owner: opendkim
+    group: opendkim
+    mode: 755
+  become: yes
+
+- name: Start OpenDKIM service
+  systemd:
+    name: opendkim
+    state: started
+    enabled: yes
+  become: yes

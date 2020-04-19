@@ -1,0 +1,20 @@
+[Unit]
+Description=Mail filter for SpamAssassin
+After=syslog.target
+After=local-fs.target
+After=network.target
+After=spamassassin.service
+Before=sendmail.service
+Before=postfix.service
+Conflicts=spamass-milter-root.service
+
+[Service]
+Type=simple
+UMask=0022
+Environment=SOCKET={{spamass_milter_socket_path}} SOCKET_OPTIONS= EXTRA_MILTERFLAGS= EXTRA_SPAMC_FLAGS=
+EnvironmentFile=-/etc/spamass-milter
+User=sa-milt
+ExecStart=/usr/bin/spamass-milter $SOCKET_OPTIONS -p $SOCKET $EXTRA_MILTER_FLAGS -- --socket=$SOCKET $EXTRA_SPAMC_FLAGS
+
+[Install]
+WantedBy=multi-user.target

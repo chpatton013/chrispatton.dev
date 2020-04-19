@@ -1,0 +1,7 @@
+---
+
+- name: Install CA Certificates packages
+  pacman:
+    name:
+    - ca-certificates
+  become: yes

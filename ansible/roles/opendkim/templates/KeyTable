@@ -1,0 +1,1 @@
+{{opendkim_domain_key}} {{domain}}:{{opendkim_selector}}:{{opendkim_private_key_file}}

@@ -1,0 +1,37 @@
+---
+
+- name: Install ClamAV-Milter packages
+  pacman:
+    name:
+    - clamav
+  become: yes
+
+- name: Render ClamAV-Milter config file
+  template:
+    src: clamav-milter.conf
+    dest: /etc/clamav/clamav-milter.conf
+    owner: clamav
+    group: clamav
+    mode: 644
+  become: yes
+  notify:
+  - Restart ClamAV-Milter service
+
+- name: Copy ClamAV-Milter unit file
+  copy:
+    src: clamav-milter.service
+    dest: /etc/systemd/system/clamav-milter.service
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Reload Systemd daemon
+  - Restart ClamAV-Milter service
+
+- name: Start ClamAV-Milter service
+  systemd:
+    name: clamav-milter.service
+    state: started
+    enabled: yes
+  become: yes

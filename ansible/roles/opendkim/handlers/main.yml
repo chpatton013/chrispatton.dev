@@ -1,0 +1,7 @@
+---
+
+- name: Restart OpenDKIM service
+  systemd:
+    name: opendkim.service
+    state: restarted
+  become: yes

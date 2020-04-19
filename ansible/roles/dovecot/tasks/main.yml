@@ -1,0 +1,88 @@
+---
+
+- name: Install Dovecot packages
+  pacman:
+    name:
+    - dovecot
+    - pigeonhole
+  become: yes
+
+- name: Create mailman group
+  group:
+    name: mailman
+    gid: 5000
+  become: yes
+
+- name: Create mailman user
+  user:
+    name: mailman
+    uid: 5000
+    group: mailman
+    create_home: no
+    home: "{{dovecot_mailman_home}}"
+    shell: /usr/bin/nologin
+    comment: User to manage virtual mail accounts
+  become: yes
+
+- name: Create mail directories
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: mailman
+    group: mailman
+    mode: 755
+  become: yes
+  with_items:
+  - "{{dovecot_mailman_home}}"
+  - "{{dovecot_sieve_after_dir}}"
+  - "{{dovecot_sieve_before_dir}}"
+  - "{{dovecot_virtual_mailroot}}"
+
+- name: Copy Sieve filter file
+  copy:
+    src: filter.sieve
+    dest: "{{dovecot_sieve_filter_file}}"
+    owner: mailman
+    group: mailman
+    mode: 644
+  become: yes
+  notify:
+  - Restart Dovecot service
+
+- name: Create Dovecot config directory
+  file:
+    path: /etc/dovecot
+    state: directory
+    owner: root
+    group: root
+    mode: 755
+  become: yes
+
+- name: Render Dovecot config file
+  template:
+    src: dovecot.conf
+    dest: /etc/dovecot/dovecot.conf
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Restart Dovecot service
+
+- name: Copy Dovecot passwd file
+  copy:
+    src: "{{dovecot_input_passwd_file}}"
+    dest: "{{dovecot_passwd_file}}"
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Restart Dovecot service
+
+- name: Start Dovecot service
+  systemd:
+    name: dovecot
+    state: started
+    enabled: yes
+  become: yes
