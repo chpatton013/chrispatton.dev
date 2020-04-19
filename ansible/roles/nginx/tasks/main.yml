@@ -48,7 +48,7 @@
 
 - name: Start and Enable Nginx service
   systemd:
-    name: nginx
+    name: nginx.service
     state: started
     enabled: yes
   become: yes
@@ -61,3 +61,14 @@
     group: root
     mode: 744
   become: yes
+
+- name: Install Fail2Ban jail config
+  copy:
+    src: fail2ban.local
+    dest: "{{fail2ban_jail_dir}}/nginx.local"
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Restart Fail2Ban service

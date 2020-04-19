@@ -56,3 +56,14 @@
       && touch /usr/local/lib/mysql-timezone-info.marker
     creates: /usr/local/lib/mysql-timezone-info.marker
   become: yes
+
+- name: Install Fail2Ban jail config
+  copy:
+    src: fail2ban.local
+    dest: "{{fail2ban_jail_dir}}/mysql.local"
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  notify:
+  - Restart Fail2Ban service

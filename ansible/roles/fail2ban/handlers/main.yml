@@ -1,0 +1,7 @@
+---
+
+- name: Restart Fail2Ban service
+  systemd:
+    name: fail2ban.service
+    state: restarted
+  become: yes

@@ -1,0 +1,5 @@
+---
+
+_fail2ban_config_dir: /etc/fail2ban
+fail2ban_jail_file: "{{_fail2ban_config_dir}}/jail.conf"
+fail2ban_jail_dir: "{{_fail2ban_config_dir}}/jail.d"

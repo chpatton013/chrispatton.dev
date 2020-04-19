@@ -3,4 +3,5 @@
 dependencies:
 - certbot
 - dh-param
+- fail2ban
 - pacman
