@@ -2,12 +2,14 @@
 
 - hosts: database
   roles:
+  - hostname
   - fail2ban
   - mysql
   - bookstack-db
 
 - hosts: webserver
   roles:
+  - hostname
   - fail2ban
   - certbot
   - nginx

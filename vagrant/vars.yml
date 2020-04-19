@@ -3,6 +3,8 @@
 rankmirror_timeout: "0.5"
 domain: example.com
 
+hostname: "vagrant.{{domain}}"
+
 bookstack_db_host: 10.0.0.31
 bookstack_db_name: bookstack
 bookstack_db_user_name: bookstack
