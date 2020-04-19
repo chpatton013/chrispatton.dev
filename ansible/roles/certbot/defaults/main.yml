@@ -1,3 +1,7 @@
 ---
 
-certbot_ssl_dir: /etc/letsencrypt/live/{{certbot_domain}}
+certbot_ssl_dir: "/etc/letsencrypt/live/{{certbot_domain}}"
+certbot_ssl_cert: "{{certbot_ssl_dir}}/cert.pem"
+certbot_ssl_chain: "{{certbot_ssl_dir}}/chain.pem"
+certbot_ssl_fullchain: "{{certbot_ssl_dir}}/fullchain.pem"
+certbot_ssl_key: "{{certbot_ssl_dir}}/privkey.pem"

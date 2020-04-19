@@ -16,8 +16,8 @@ bookstack_web_domain: "bookstack.{{domain}}"
 certbot_domain: "{{domain}}"
 certbot_domains:
 - "{{domain}}"
-certbot_credentials_file: "{{vagrant_vars_dir}}/certbot-credentials.ini"
-certbot_register_arguments: ""
+certbot_input_credentials_file: "{{vagrant_vars_dir}}/certbot-credentials.ini"
+certbot_register_arguments: "--register-unsafely-without-email"
 certbot_certonly_arguments: ""
 
 resume_url: https://raw.githubusercontent.com/chpatton013/resume/master/index.html

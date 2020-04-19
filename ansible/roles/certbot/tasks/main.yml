@@ -32,7 +32,7 @@
 
 - name: Copy Certbot credentials
   copy:
-    src: "{{certbot_credentials_file}}"
+    src: "{{certbot_input_credentials_file}}"
     dest: /root/certbot-credentials.ini
     owner: root
     group: root
