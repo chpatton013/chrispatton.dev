@@ -33,7 +33,7 @@
 
 - name: Start and Enable MySQL service
   systemd:
-    name: mysqld
+    name: mysqld.service
     state: started
     enabled: yes
   become: yes

@@ -5,6 +5,12 @@ domain: example.com
 
 hostname: "vagrant.{{domain}}"
 
+redis_bind: 0.0.0.0
+redis_host: 10.0.0.31
+redis_port: 6379
+redis_db: 0
+redis_pass: password
+
 bookstack_db_host: 10.0.0.31
 bookstack_db_name: bookstack
 bookstack_db_user_name: bookstack

@@ -5,6 +5,7 @@
   - hostname
   - fail2ban
   - mysql
+  - redis
   - bookstack-db
 
 - hosts: webserver

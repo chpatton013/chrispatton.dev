@@ -1,0 +1,46 @@
+---
+
+- name: Install Redis package
+  pacman:
+    name: redis
+  become: yes
+
+- name: Render Redis config file
+  template:
+    src: redis.conf
+    dest: /etc/redis.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Restart Redis service
+
+- name: Enable vm.overcommit_memory
+  sysctl:
+    name: vm.overcommit_memory
+    value: "1"
+    state: present
+    sysctl_set: yes
+    reload: yes
+  become: yes
+  notify:
+  - Restart Redis service
+
+- name: Disable transparent huge pages
+  copy:
+    src: sysfs.conf
+    dest: /etc/tmpfiles.d/redis.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Restart Redis service
+
+- name: Start and Enable Redis service
+  systemd:
+    name: redis.service
+    state: started
+    enabled: yes
+  become: yes

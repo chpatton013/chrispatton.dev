@@ -2,6 +2,6 @@
 
 - name: Restart MySQL service
   systemd:
-    name: mysqld
+    name: mysqld.service
     state: restarted
   become: yes

@@ -1,6 +1,5 @@
 ---
 
 dependencies:
-- fail2ban
 - pacman
 - systemd
