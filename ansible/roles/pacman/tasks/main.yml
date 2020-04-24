@@ -24,7 +24,7 @@
 - name: Rank Pacman mirrors
   shell:
     cmd: >
-      rankmirrors \
+      /usr/bin/rankmirrors \
           -n 5 --max-time {{rankmirror_timeout}} \
           /etc/pacman.d/mirrorlist.backup > \
         /etc/pacman.d/mirrorlist.ranked

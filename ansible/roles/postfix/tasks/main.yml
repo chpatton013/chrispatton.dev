@@ -20,7 +20,7 @@
 
 - name: Generate Postfix aliases
   command:
-    cmd: postalias /etc/postfix/aliases
+    cmd: /usr/bin/postalias /etc/postfix/aliases
   become: yes
   when: render_postfix_aliases_file.changed
   notify:
@@ -42,7 +42,7 @@
 
 - name: Generate Postfix databases
   command:
-    cmd: postmap /etc/postfix/{{item.item}}
+    cmd: /usr/bin/postmap /etc/postfix/{{item.item}}
   become: yes
   when: item.changed
   loop: "{{render_postfix_database_files.results}}"
@@ -65,7 +65,7 @@
 
 - name: Validate Postfix configuration
   command:
-    cmd: postfix check
+    cmd: /usr/bin/postfix check
   become: yes
 
 - name: Start Postfix service

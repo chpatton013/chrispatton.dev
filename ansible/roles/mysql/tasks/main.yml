@@ -8,11 +8,11 @@
 - name: Run first-time MariaDB setup
   shell:
     cmd: >
-      mariadb-install-db \
+      /usr/bin/mariadb-install-db \
         --user={{mysql_user}} \
         --basedir={{mysql_basedir}} \
         --datadir={{mysql_datadir}} \
-      && touch /usr/local/lib/mariadb-install-db.marker
+      && /usr/bin/touch /usr/local/lib/mariadb-install-db.marker
     creates: /usr/local/lib/mariadb-install-db.marker
   become: yes
 
@@ -42,8 +42,8 @@
 - name: Harden MySQL setup
   shell:
     cmd: >
-        mysql --user=root --password= \
-        && touch /usr/local/lib/mysql-secure-install.marker
+        /usr/bin/mysql --user=root --password= \
+        && /usr/bin/touch /usr/local/lib/mysql-secure-install.marker
     stdin: "{{lookup('file', 'mysql-secure-install.sql')}}"
     creates: /usr/local/lib/mysql-secure-install.marker
   become: yes
@@ -51,9 +51,9 @@
 - name: Populate MySQL timezone info tables
   shell:
     cmd: >
-      mysql_tzinfo_to_sql /usr/share/zoneinfo | \
-        mysql --user=root --password= mysql \
-      && touch /usr/local/lib/mysql-timezone-info.marker
+      /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | \
+        /usr/bin/mysql --user=root --password= mysql \
+      && /usr/bin/touch /usr/local/lib/mysql-timezone-info.marker
     creates: /usr/local/lib/mysql-timezone-info.marker
   become: yes
 

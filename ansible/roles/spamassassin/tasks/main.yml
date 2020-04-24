@@ -91,14 +91,14 @@
   - name: Build Pyzor AUR package
     command:
       chdir: "{{spamd_pyzor_aur_dir}}"
-      cmd: makepkg
+      cmd: /usr/bin/makepkg
       creates: "{{spamd_pyzor_aur_pkg}}"
     become: yes
     become_user: nobody
 
   - name: Install Pyzor AUR package
     command:
-      cmd: pacman --upgrade --noconfirm {{spamd_pyzor_aur_pkg}}
+      cmd: /usr/bin/pacman --upgrade --noconfirm {{spamd_pyzor_aur_pkg}}
       creates: /usr/bin/pyzor
     become: yes
     notify:

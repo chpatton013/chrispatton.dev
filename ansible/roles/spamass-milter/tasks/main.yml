@@ -28,7 +28,7 @@
 - name: Build Spamass-Milter AUR package
   command:
     chdir: "{{spamass_milter_aur_dir}}"
-    cmd: makepkg
+    cmd: /usr/bin/makepkg
     creates: "{{spamass_milter_aur_pkg}}"
   environment:
     SPAMC: /usr/bin/vendor_perl/spamc
@@ -37,7 +37,7 @@
 
 - name: Install Spamass-Milter AUR package
   command:
-    cmd: pacman --upgrade --noconfirm {{spamass_milter_aur_pkg}}
+    cmd: /usr/bin/pacman --upgrade --noconfirm {{spamass_milter_aur_pkg}}
     creates: /usr/bin/spamass-milter
   become: yes
   notify:

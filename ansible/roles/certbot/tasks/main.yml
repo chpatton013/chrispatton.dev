@@ -24,7 +24,7 @@
 - name: Register Certbot account
   command:
     cmd: >
-      certbot register
+      /usr/bin/certbot register
         --non-interactive --agree-tos
         {{certbot_register_arguments}}
     creates: /etc/letsencrypt/accounts
@@ -43,7 +43,7 @@
 - name: Create Certbot key
   command:
     cmd: >
-      certbot certonly
+      /usr/bin/certbot certonly
         --rsa-key-size=4096 --staple-ocsp --must-staple
         {{certbot_certonly_arguments}}
         --domains "{{certbot_domains|join(',')}}"

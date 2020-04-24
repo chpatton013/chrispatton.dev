@@ -2,6 +2,6 @@
 
 - name: Create Bookstack database and user
   command:
-    cmd: mysql --user=root --password=
+    cmd: /usr/bin/mysql --user=root --password=
     stdin: "{{lookup('template', 'bookstack.sql')}}"
   become: yes
