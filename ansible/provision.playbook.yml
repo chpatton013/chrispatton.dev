@@ -1,6 +1,6 @@
 ---
 
-- hosts: database
+- hosts: dataserver
   roles:
   - hostname
   - fail2ban

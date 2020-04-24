@@ -32,11 +32,10 @@ class Machine
 end
 
 MACHINES = [
-  # Machine.new(name: "web", box: "archlinux/archlinux", hostname: "web", static_ip: "10.0.0.11", groups: []),
-  # Machine.new(name: "mx", box: "archlinux/archlinux", hostname: "mx", static_ip: "10.0.0.21", groups: ["mail"]),
-  # Machine.new(name: "db", box: "archlinux/archlinux", hostname: "db", static_ip: "10.0.0.31", groups: ["database"]),
-  # Machine.new(name: "cache", box: "archlinux/archlinux", hostname: "db", static_ip: "10.0.0.41", groups: ["cache"]),
-  # Machine.new(name: "filter", box: "archlinux/archlinux", hostname: "filter", static_ip: "10.0.0.51", groups: []),
+  Machine.new(name: "web", box: "archlinux/archlinux", hostname: "web", static_ip: "10.0.0.11", groups: ["webserver"]),
+  Machine.new(name: "mx", box: "archlinux/archlinux", hostname: "mx", static_ip: "10.0.0.21", groups: ["mailserver"]),
+  Machine.new(name: "db", box: "archlinux/archlinux", hostname: "db", static_ip: "10.0.0.31", groups: ["dataserver"]),
+  Machine.new(name: "filter", box: "archlinux/archlinux", hostname: "filter", static_ip: "10.0.0.51", groups: ["filterserver"]),
 ]
 
 Vagrant.configure("2") do |config|
