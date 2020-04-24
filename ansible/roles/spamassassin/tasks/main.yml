@@ -1,0 +1,148 @@
+---
+
+- block: # spamassassin
+
+  - name: Install SpamAssassin packages
+    pacman:
+      name:
+      - gcc
+      - make
+      - spamassassin
+    become: yes
+
+  - name: Render SpamAssassin config file
+    template:
+      src: local.cf
+      dest: "{{spamd_etc_dir}}/local.cf"
+      owner: root
+      group: root
+      mode: 644
+    become: yes
+    notify:
+    - Restart SpamAssassin service
+
+  - name: Update SpamAssassin spam definitions
+    command:
+      cmd: /usr/bin/vendor_perl/sa-update
+      creates: "{{spamd_etc_dir}}/sa-update-keys"
+    become: yes
+    register: update_spamassassin_definitions
+
+  - name: Compile SpamAssassin spam definitions
+    command:
+      cmd: /usr/bin/vendor_perl/sa-compile
+      creates: "{{spamd_data_dir}}/compiled"
+    become: yes
+    when: update_spamassassin_definitions.changed
+    notify:
+    - Restart SpamAssassin service
+
+- block: # razor
+
+  - name: Install Razor package
+    pacman:
+      name: razor
+    become: yes
+
+  - name: Create Razor config
+    command:
+      cmd: /usr/bin/vendor_perl/razor-admin -home={{spamd_etc_dir}}/razor -create
+      creates: "{{spamd_razor_home}}/razor-agent.conf"
+    become: yes
+    notify:
+    - Restart SpamAssassin service
+
+  - name: Register Razor account
+    command:
+      cmd: /usr/bin/vendor_perl/razor-admin -home={{spamd_etc_dir}}/razor -register
+      creates: "{{spamd_razor_home}}/identity"
+    become: yes
+    notify:
+    - Restart SpamAssassin service
+
+  - name: Render Razor config file
+    template:
+      src: razor-agent.conf
+      dest: "{{spamd_razor_home}}/razor-agent.conf"
+      owner: root
+      group: root
+      mode: 644
+    become: yes
+    notify:
+    - Restart SpamAssassin service
+
+- block: # pyzor
+
+  - name: Install Pyzor packages
+    pacman:
+      name:
+      - python2
+      - python2-setuptools # (make)
+    become: yes
+
+  - name: Clone Pyzor AUR package
+    git:
+      repo: https://aur.archlinux.org/pyzor.git
+      dest: "{{spamd_pyzor_aur_dir}}"
+      depth: 1
+    become: yes
+    become_user: nobody
+
+  - name: Build Pyzor AUR package
+    command:
+      chdir: "{{spamd_pyzor_aur_dir}}"
+      cmd: makepkg
+      creates: "{{spamd_pyzor_aur_pkg}}"
+    become: yes
+    become_user: nobody
+
+  - name: Install Pyzor AUR package
+    command:
+      cmd: pacman --upgrade --noconfirm {{spamd_pyzor_aur_pkg}}
+      creates: /usr/bin/pyzor
+    become: yes
+    notify:
+    - Restart SpamAssassin service
+
+  - name: Craete Pyzor home directory
+    file:
+      path: "{{spamd_pyzor_home}}"
+      state: directory
+      owner: root
+      group: root
+      mode: 755
+    become: yes
+
+- name: Install SpamAssassin Update service and timer
+  copy:
+    src: "{{item}}"
+    dest: "/etc/systemd/system/{{item}}"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  with_items:
+  - spamassassin-update.service
+  - spamassassin-update.timer
+  notify:
+  - Reload Systemd daemon
+  - Restart SpamAssassin Update timer
+
+- name: Validate SpamAssassin configuration
+  command:
+    cmd: /usr/bin/vendor_perl/spamassassin --lint
+  become: yes
+
+- name: Start and Enable SpamAssassin service
+  systemd:
+    name: spamassassin.service
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Start and Enable SpamAssassin Update timer
+  systemd:
+    name: spamassassin-update.timer
+    state: started
+    enabled: yes
+  become: yes

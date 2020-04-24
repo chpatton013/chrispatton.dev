@@ -1,0 +1,13 @@
+---
+
+- name: Restart SpamAssassin service
+  systemd:
+    name: spamassassin.service
+    state: restarted
+  become: yes
+
+- name: Restart SpamAssassin Update timer
+  systemd:
+    name: spamassassin-update.timer
+    state: restarted
+  become: yes

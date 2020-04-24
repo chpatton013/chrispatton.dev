@@ -21,6 +21,8 @@
   roles:
   - hostname
   - fail2ban
+  - clamav
+  - spamassassin
 
 - hosts: mailserver
   roles:

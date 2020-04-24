@@ -1,0 +1,7 @@
+---
+
+dependencies:
+- aur
+- git
+- pacman
+- systemd

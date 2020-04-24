@@ -1,0 +1,27 @@
+---
+
+- name: Install ClamAV packages
+  pacman:
+    name:
+    - clamav
+  become: yes
+
+- name: Update virus definitions
+  command:
+    cmd: /usr/bin/freshclam
+    creates: /var/lib/clamav/*.cvd
+  become: yes
+
+- name: Start and Enable ClamAV FreshClam service
+  systemd:
+    name: clamav-freshclam.service
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Start and Enable ClamAV daemon service
+  systemd:
+    name: clamav-daemon.service
+    state: started
+    enabled: yes
+  become: yes
