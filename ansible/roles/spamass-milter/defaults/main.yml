@@ -1,2 +1,5 @@
 ---
+
+spamass_milter_aur_dir: "{{aur_root_dir}}/spamass-milter"
+spamass_milter_aur_pkg: "{{spamass_milter_aur_dir}}/spamass-milter-0.4.0-1-x86_64.pkg.tar.xz"
 spamass_milter_pid_path: "{{spamass_milter_run_dir}}/spamass-milter.pid"
