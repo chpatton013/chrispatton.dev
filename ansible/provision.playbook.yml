@@ -2,6 +2,7 @@
 
 - hosts: dataserver
   roles:
+  - admin
   - hostname
   - fail2ban
   - mysql
@@ -10,6 +11,7 @@
 
 - hosts: webserver
   roles:
+  - admin
   - hostname
   - fail2ban
   - certbot
@@ -19,6 +21,7 @@
 
 - hosts: filterserver
   roles:
+  - admin
   - hostname
   - fail2ban
   - clamav
@@ -26,6 +29,7 @@
 
 - hosts: mailserver
   roles:
+  - admin
   - hostname
   - fail2ban
   - clamav-milter

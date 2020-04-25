@@ -1,0 +1,13 @@
+---
+
+- name: Install Admin packages
+  pacman:
+    name:
+    - dstat
+    - htop
+    - man
+    - ncdu
+    - tree
+    - vim
+    - which
+  become: yes
