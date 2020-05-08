@@ -6,6 +6,7 @@
   - hostname
   - fail2ban
   - mysql
+  - postgres
   - redis
   - bookstack-db
 

@@ -22,7 +22,7 @@
     dest: /etc/my.cnf.d/{{item}}
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   with_items:
   - client.cnf

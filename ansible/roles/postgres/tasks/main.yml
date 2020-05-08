@@ -1,0 +1,39 @@
+---
+
+- name: Install PostgreSQL package
+  pacman:
+    name: postgresql
+  become: yes
+
+- name: Run first-time PostgreSQL setup
+  shell:
+    cmd: >
+      /usr/bin/sudo --login --user={{postgres_user}} \
+        /usr/bin/initdb \
+          --locale={{locale}} \
+          --encoding={{encoding}} \
+          --pgdata={{postgres_datadir}} \
+      && /usr/bin/touch /usr/local/lib/postgres-install-db.marker
+    creates: /usr/local/lib/postgres-install-db.marker
+  become: yes
+
+- name: Copy PostgreSQL config files
+  copy:
+    src: "{{item}}"
+    dest: "{{postgres_datadir}}/{{item}}"
+    owner: "{{postgres_user}}"
+    group: "{{postgres_group}}"
+    mode: 0600
+  become: yes
+  with_items:
+  - pg_hba.conf
+  - postgresql.conf
+  notify:
+  - Restart PostgreSQL service
+
+- name: Start and Enable PostgreSQL service
+  systemd:
+    name: postgresql.service
+    state: started
+    enabled: yes
+  become: yes
