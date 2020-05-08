@@ -41,3 +41,8 @@
     group: root
     mode: 0644
   become: yes
+
+- name: Upgrade system packages
+  pacman:
+    upgrade: yes
+  become: yes
