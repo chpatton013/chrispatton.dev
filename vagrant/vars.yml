@@ -1,6 +1,6 @@
 ---
 
-rankmirror_timeout: "0.5"
+pacman_mirror_country: US
 domain: example.com
 
 hostname: "vagrant.{{domain}}"

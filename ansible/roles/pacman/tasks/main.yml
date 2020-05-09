@@ -1,45 +1,25 @@
 ---
 
+- name: Sync updated Pacman mirrorlist
+  get_url:
+    url: https://www.archlinux.org/mirrorlist/?country={{pacman_mirror_country}}&protocol=https&use_mirror_status=on
+    dest: /etc/pacman.d/mirrorlist
+    force: yes
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Enable servers in Pacman mirrorlist
+  replace:
+    path: /etc/pacman.d/mirrorlist
+    regexp: "#Server"
+    replace: "Server"
+  become: yes
+
 - name: Update Pacman cache
   pacman:
     update_cache: yes
-  become: yes
-
-- name: Install Pacman packages
-  pacman:
-    name:
-    - pacman-contrib
-  become: yes
-
-- name: Backup Pacman mirrorlist
-  copy:
-    remote_src: yes
-    src: /etc/pacman.d/mirrorlist
-    dest: /etc/pacman.d/mirrorlist.backup
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-
-- name: Rank Pacman mirrors
-  shell:
-    cmd: >
-      /usr/bin/rankmirrors \
-          -n 5 --max-time {{rankmirror_timeout}} \
-          /etc/pacman.d/mirrorlist.backup > \
-        /etc/pacman.d/mirrorlist.ranked
-    creates: /etc/pacman.d/mirrorlist.ranked
-  become: yes
-
-- name: Overwrite Pacman mirrors
-  copy:
-    remote_src: yes
-    force: yes
-    src: /etc/pacman.d/mirrorlist.ranked
-    dest: /etc/pacman.d/mirrorlist
-    owner: root
-    group: root
-    mode: 0644
   become: yes
 
 - name: Upgrade system packages
