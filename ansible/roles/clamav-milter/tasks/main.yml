@@ -12,7 +12,7 @@
     dest: /etc/clamav/clamav-milter.conf
     owner: clamav
     group: clamav
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart ClamAV-Milter service
@@ -23,7 +23,7 @@
     dest: /etc/systemd/system/clamav-milter.service
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Reload Systemd daemon

@@ -14,7 +14,7 @@
     dest: /etc/postfix/aliases
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   register: render_postfix_aliases_file
 
@@ -32,7 +32,7 @@
     dest: /etc/postfix/{{item}}
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   with_items:
   - virtual
@@ -55,7 +55,7 @@
     dest: /etc/postfix/{{item}}
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   with_items:
   - main.cf
@@ -81,7 +81,7 @@
     dest: "{{fail2ban_jail_dir}}/postfix.local"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Fail2Ban service

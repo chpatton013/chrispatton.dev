@@ -49,7 +49,7 @@
     dest: /etc/spamass-milter
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Spamass-Milter service
@@ -60,7 +60,7 @@
     dest: /etc/systemd/system/spamass-milter.service
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Reload Systemd daemon

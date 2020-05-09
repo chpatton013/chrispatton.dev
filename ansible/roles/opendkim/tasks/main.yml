@@ -12,7 +12,7 @@
     dest: /etc/opendkim/{{item}}
     owner: root
     group: root
-    mode: 600
+    mode: 0600
   become: yes
   with_items:
   - KeyTable
@@ -28,7 +28,7 @@
     dest: "{{item.dest}}"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   with_items:
   - {src: "{{opendkim_input_public_key_file}}", dest: "{{opendkim_public_key_file}}"}
@@ -42,7 +42,7 @@
     state: directory
     owner: opendkim
     group: opendkim
-    mode: 755
+    mode: 0755
   become: yes
 
 - name: Start OpenDKIM service

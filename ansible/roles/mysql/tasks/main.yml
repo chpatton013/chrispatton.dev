@@ -63,7 +63,7 @@
     dest: "{{fail2ban_jail_dir}}/mysql.local"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Fail2Ban service

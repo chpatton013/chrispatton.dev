@@ -41,7 +41,7 @@
     dest: /etc/nginx/nginx.conf
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Reload Nginx service
@@ -59,7 +59,7 @@
     dest: /etc/letsencrypt/renewal-hooks/deploy/nginx.sh
     owner: root
     group: root
-    mode: 744
+    mode: 0744
   become: yes
 
 - name: Install Fail2Ban jail config
@@ -68,7 +68,7 @@
     dest: "{{fail2ban_jail_dir}}/nginx.local"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Fail2Ban service

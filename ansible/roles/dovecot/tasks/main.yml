@@ -30,7 +30,7 @@
     state: directory
     owner: mailman
     group: mailman
-    mode: 755
+    mode: 0755
   become: yes
   with_items:
   - "{{dovecot_mailman_home}}"
@@ -44,7 +44,7 @@
     dest: "{{dovecot_sieve_filter_file}}"
     owner: mailman
     group: mailman
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Dovecot service
@@ -55,7 +55,7 @@
     state: directory
     owner: root
     group: root
-    mode: 755
+    mode: 0755
   become: yes
 
 - name: Render Dovecot config file
@@ -64,7 +64,7 @@
     dest: /etc/dovecot/dovecot.conf
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Dovecot service
@@ -75,7 +75,7 @@
     dest: "{{dovecot_passwd_file}}"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   become: yes
   notify:
   - Restart Dovecot service
