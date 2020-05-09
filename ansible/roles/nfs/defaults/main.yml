@@ -1,0 +1,5 @@
+---
+
+nfs_export_root: /export
+nfs_config_root: /etc/exports.d
+nfs_mount_root: /mnt/share

@@ -1,0 +1,12 @@
+---
+
+- name: Restart NFS service
+  systemd:
+    name: nfs-server.service
+    state: restarted
+  become: yes
+
+- name: Export NFS shares
+  command:
+    cmd: /usr/sbin/exportfs -ar
+  become: yes

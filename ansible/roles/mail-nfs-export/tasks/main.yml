@@ -1,0 +1,49 @@
+---
+
+- name: Create Mail NFS data directory
+  file:
+    path: "{{mail_nfs_data_dir}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Create Mail NFS export directory
+  file:
+    path: "{{mail_nfs_export_dir}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Render Mail export mount unit
+  template:
+    src: export-mail.mount
+    dest: /etc/systemd/system/export-mail.mount
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Restart Mail NFS mount
+  - Reload Systemd daemon
+
+- name: Start and Mount Mail export mount unit
+  systemd:
+    name: export-mail.mount
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Render Mail export config file
+  template:
+    src: mail.export
+    dest: "{{nfs_config_root}}/mail.export"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Export NFS shares

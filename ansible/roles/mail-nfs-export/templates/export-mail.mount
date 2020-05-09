@@ -1,0 +1,14 @@
+[Unit]
+Description=Mount Mail NFS export
+DefaultDependencies=no
+Conflicts=umount.target
+Before=local-fs.target umount.target
+
+[Mount]
+What={{mail_nfs_data_dir}}
+Where={{mail_nfs_export_dir}}
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target

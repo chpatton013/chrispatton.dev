@@ -1,0 +1,8 @@
+---
+
+mail_nfs_data_dir: /var/lib/mail
+mail_nfs_export_dir: "{{nfs_export_root}}/mail"
+mail_nfs_hosts:
+- "192.168.0.0/16"
+- "172.16.0.0/12"
+- "10.0.0.0/8"

@@ -1,0 +1,13 @@
+---
+
+- name: Restart Mail NFS share mount
+  systemd:
+    name: mnt-share-mail.mount
+    state: restarted
+  become: yes
+
+- name: Restart Mail NFS share automount
+  systemd:
+    name: mnt-share-mail.automount
+    state: restarted
+  become: yes

@@ -1,0 +1,49 @@
+---
+
+- name: Create Mail NFS mount directory
+  file:
+    path: "{{mail_nfs_mount_dir}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Render Mail share mount unit
+  template:
+    src: mnt-share-mail.mount
+    dest: /etc/systemd/system/mnt-share-mail.mount
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Restart Mail NFS share mount
+  - Restart Mail NFS share automount
+  - Reload Systemd daemon
+
+- name: Start and Mount Mail share mount unit
+  systemd:
+    name: mnt-share-mail.mount
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Render Mail share automount unit
+  template:
+    src: mnt-share-mail.automount
+    dest: /etc/systemd/system/mnt-share-mail.automount
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Restart Mail NFS share automount
+  - Reload Systemd daemon
+
+- name: Start and Enable Mail share automount unit
+  systemd:
+    name: mnt-share-mail.mount
+    state: started
+    enabled: yes
+  become: yes

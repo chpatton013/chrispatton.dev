@@ -31,6 +31,7 @@ certbot_certonly_arguments: ""
 resume_url: https://raw.githubusercontent.com/chpatton013/resume/master/index.html
 resume_domain: "resume.{{domain}}"
 
+mail_nfs_host: 10.0.0.31
 mail_user: vagrant
 
 opendkim_selector: mail

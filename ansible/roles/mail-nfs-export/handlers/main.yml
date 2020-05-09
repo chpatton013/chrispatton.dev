@@ -1,0 +1,7 @@
+---
+
+- name: Restart Mail NFS mount
+  systemd:
+    name: export-mail.mount
+    state: restarted
+  become: yes

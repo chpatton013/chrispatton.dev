@@ -1,0 +1,4 @@
+---
+
+mail_nfs_share_dir: "{{nfs_export_root}}/mail"
+mail_nfs_mount_dir: "{{nfs_mount_root}}/mail"

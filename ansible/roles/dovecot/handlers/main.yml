@@ -1,5 +1,17 @@
 ---
 
+- name: Restart Virtual Mail mount
+  systemd:
+    name: var-mail-virtual.mount
+    state: restarted
+  become: yes
+
+- name: Restart Virtual Mail automount
+  systemd:
+    name: var-mail-virtual.automount
+    state: restarted
+  become: yes
+
 - name: Restart Dovecot service
   systemd:
     name: dovecot.service

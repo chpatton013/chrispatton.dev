@@ -1,0 +1,31 @@
+---
+
+- name: Install NFS package
+  pacman:
+    name: nfs-utils
+  become: yes
+
+- name: Create NFS export root
+  file:
+    path: "{{nfs_export_root}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 755
+  become: yes
+
+- name: Create NFS mount root
+  file:
+    path: "{{nfs_mount_root}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 755
+  become: yes
+
+- name: Start and Enable NFS service
+  systemd:
+    name: nfs-server.service
+    state: started
+    enabled: yes
+  become: yes

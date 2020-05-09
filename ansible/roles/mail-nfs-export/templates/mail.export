@@ -1,0 +1,4 @@
+{{mail_nfs_export_dir}} {% for host in mail_nfs_hosts %}
+{{host}}(rw,sync,no_subtree_check,all_squash)
+{%- if not loop.last %} {% endif %}
+{% endfor %}

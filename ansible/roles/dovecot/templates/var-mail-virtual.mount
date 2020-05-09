@@ -1,0 +1,14 @@
+[Unit]
+Description=Mount Virtual Mail
+DefaultDependencies=no
+Conflicts=umount.target
+Before=local-fs.target umount.target
+
+[Mount]
+What={{mail_nfs_mount_dir}}
+Where={{dovecot_virtual_mailroot}}
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target

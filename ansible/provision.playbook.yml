@@ -5,6 +5,7 @@
   - admin
   - hostname
   - fail2ban
+  - mail-nfs-export
   - mysql
   - postgres
   - redis

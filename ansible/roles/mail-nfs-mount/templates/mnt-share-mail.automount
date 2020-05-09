@@ -1,0 +1,9 @@
+[Unit]
+Description=Automount Mail NFS share
+DefaultDependencies=no
+
+[Automount]
+Where={{mail_nfs_mount_dir}}
+
+[Install]
+WantedBy=multi-user.target

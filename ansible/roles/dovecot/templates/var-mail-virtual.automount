@@ -1,0 +1,9 @@
+[Unit]
+Description=Automount Virtual Mail
+DefaultDependencies=no
+
+[Automount]
+Where={{dovecot_virtual_mailroot}}
+
+[Install]
+WantedBy=local-fs.target
