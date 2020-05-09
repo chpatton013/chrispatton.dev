@@ -41,8 +41,8 @@ dovecot_input_passwd_file: "{{vagrant_vars_dir}}/dovecot-passwd"
 
 postfix_hostname: "vagrant.{{domain}}"
 
-clamd_host: "10.0.0.51"
+clamd_host: "10.0.0.41"
 clamd_port: "3310"
 
-spamd_host: "10.0.0.51"
+spamd_host: "10.0.0.41"
 spamd_port: "783"
