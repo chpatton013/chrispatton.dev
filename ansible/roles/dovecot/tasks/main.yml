@@ -5,6 +5,7 @@
     name:
     - dovecot
     - pigeonhole
+    - postfix
   become: yes
 
 - name: Create mailman group

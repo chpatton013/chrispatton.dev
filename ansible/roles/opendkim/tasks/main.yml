@@ -4,6 +4,7 @@
   pacman:
     name:
     - opendkim
+    - postfix
   become: yes
 
 - name: Render OpenDKIM config files

@@ -4,6 +4,7 @@
   pacman:
     name:
     - clamav
+    - postfix
   become: yes
 
 - name: Render ClamAV-Milter config file
