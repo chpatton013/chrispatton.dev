@@ -39,8 +39,8 @@
 
 - name: Render Mail export config file
   template:
-    src: mail.export
-    dest: "{{nfs_config_root}}/mail.export"
+    src: mail.exports
+    dest: "{{nfs_config_root}}/mail.exports"
     owner: root
     group: root
     mode: 0644
