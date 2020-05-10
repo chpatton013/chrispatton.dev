@@ -4,8 +4,8 @@
   file:
     path: "{{mail_nfs_data_dir}}"
     state: directory
-    owner: root
-    group: root
+    owner: nobody
+    group: nobody
     mode: 0755
   become: yes
 
