@@ -49,31 +49,11 @@
   become: yes
   notify:
   - Restart Virtual Mail mount
-  - Restart Virtual Mail automount
   - Reload Systemd daemon
 
 - name: Start and Mount Virtual Mail mount unit
   systemd:
     name: var-mail-virtual.mount
-    state: started
-    enabled: yes
-  become: yes
-
-- name: Render Virtual Mail automount unit
-  template:
-    src: var-mail-virtual.automount
-    dest: /etc/systemd/system/var-mail-virtual.automount
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  notify:
-  - Restart Virtual Mail automount
-  - Reload Systemd daemon
-
-- name: Start and Enable Virtual Mail automount unit
-  systemd:
-    name: var-mail-virtual.automount
     state: started
     enabled: yes
   become: yes
