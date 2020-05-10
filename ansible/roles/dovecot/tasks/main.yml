@@ -41,8 +41,8 @@
 
 - name: Render Virtual Mail mount unit
   template:
-    src: var-mail-virtual.mount
-    dest: /etc/systemd/system/var-mail-virtual.mount
+    src: var-spool-mail-virtual.mount
+    dest: /etc/systemd/system/var-spool-mail-virtual.mount
     owner: root
     group: root
     mode: 0644
@@ -53,7 +53,7 @@
 
 - name: Start and Mount Virtual Mail mount unit
   systemd:
-    name: var-mail-virtual.mount
+    name: var-spool-mail-virtual.mount
     state: started
     enabled: yes
   become: yes

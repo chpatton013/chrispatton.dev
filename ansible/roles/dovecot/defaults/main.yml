@@ -2,8 +2,8 @@
 
 dovecot_etc_dir: /etc/dovecot
 dovecot_passwd_file: "{{dovecot_etc_dir}}/passwd"
-dovecot_mailman_home: /var/mail/mailman
+dovecot_mailman_home: /var/spool/mail/mailman
 dovecot_sieve_after_dir: "{{dovecot_mailman_home}}/sieve-after"
 dovecot_sieve_before_dir: "{{dovecot_mailman_home}}/sieve-before"
 dovecot_sieve_filter_file: "{{dovecot_sieve_before_dir}}/filter.sieve"
-dovecot_virtual_mailroot: /var/mail/virtual
+dovecot_virtual_mailroot: /var/spool/mail/virtual
