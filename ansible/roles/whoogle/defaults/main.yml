@@ -1,0 +1,4 @@
+---
+
+whoogle_docker_image: benbusby/whoogle-search
+whoogle_port: 8001

@@ -21,6 +21,8 @@ bookstack_db_user_pass: bookstack
 
 bookstack_web_domain: "bookstack.{{domain}}"
 
+whoogle_domain: "whoogle.{{domain}}"
+
 certbot_domain: "{{domain}}"
 certbot_domains:
 - "{{domain}}"

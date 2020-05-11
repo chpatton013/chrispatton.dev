@@ -1,0 +1,7 @@
+---
+
+- name: Restart Whoogle service
+  systemd:
+    name: whoogle.service
+    state: restarted
+  become: yes

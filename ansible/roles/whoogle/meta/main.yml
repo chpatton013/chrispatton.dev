@@ -1,0 +1,6 @@
+---
+
+dependencies:
+- docker
+- nginx
+- systemd

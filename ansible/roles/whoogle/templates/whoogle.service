@@ -1,0 +1,17 @@
+[Unit]
+Description=Whoogle docker container
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=docker run \
+  --name=whoogle-search \
+  --publish {{whoogle_port}}:5000 \
+  --init \
+  --rm \
+  {{whoogle_docker_image}}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

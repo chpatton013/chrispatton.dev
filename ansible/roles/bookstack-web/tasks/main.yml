@@ -1,6 +1,6 @@
 ---
 
-- name: Render bookstack container env file
+- name: Render Bookstack container env file
   template:
     src: bookstack.env
     dest: "{{bookstack_web_env_file}}"
@@ -11,7 +11,7 @@
   notify:
   - Restart Bookstack service
 
-- name: Render bookstack unit file
+- name: Render Bookstack unit file
   template:
     src: bookstack.service
     dest: /etc/systemd/system/bookstack.service
@@ -36,14 +36,14 @@
   - "{{bookstack_web_log_dir}}"
   - "{{bookstack_web_www_dir}}"
 
-- name: Start and Enable bookstack service
+- name: Start and Enable Bookstack service
   systemd:
-    name: bookstack
+    name: bookstack.service
     state: started
     enabled: yes
   become: yes
 
-- name: Render bookstack nginx config file
+- name: Render Bookstack nginx config file
   template:
     src: bookstack.conf
     dest: "{{nginx_sites_available_dir}}/bookstack.conf"
@@ -54,7 +54,7 @@
   notify:
   - Reload Nginx service
 
-- name: Enable bookstack site
+- name: Enable Bookstack site
   file:
     src: "{{nginx_sites_available_dir}}/bookstack.conf"
     path: "{{nginx_sites_enabled_dir}}/bookstack.conf"

@@ -19,6 +19,7 @@
   - certbot
   - nginx
   - bookstack-web
+  - whoogle
   - resume
 
 - hosts: filterserver
