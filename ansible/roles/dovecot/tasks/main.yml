@@ -25,7 +25,7 @@
     comment: User to manage virtual mail accounts
   become: yes
 
-- name: Create mail directories
+- name: Create mailman directories
   file:
     path: "{{item}}"
     state: directory
@@ -37,7 +37,12 @@
   - "{{dovecot_mailman_home}}"
   - "{{dovecot_sieve_after_dir}}"
   - "{{dovecot_sieve_before_dir}}"
-  - "{{dovecot_virtual_mailroot}}"
+
+- name: Create mail NFS directories
+  file:
+    path: "{{dovecot_virtual_mailroot}}"
+    state: directory
+  become: yes
 
 - name: Render Virtual Mail mount unit
   template:

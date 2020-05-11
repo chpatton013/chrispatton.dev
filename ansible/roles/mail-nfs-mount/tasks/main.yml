@@ -4,9 +4,6 @@
   file:
     path: "{{mail_nfs_mount_dir}}"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
   become: yes
 
 - name: Render Mail share mount unit

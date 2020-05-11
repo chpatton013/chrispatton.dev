@@ -11,7 +11,7 @@
     state: directory
     owner: root
     group: root
-    mode: 755
+    mode: 0755
   become: yes
 
 - name: Create NFS mount root
@@ -20,7 +20,7 @@
     state: directory
     owner: root
     group: root
-    mode: 755
+    mode: 0755
   become: yes
 
 - name: Start and Enable NFS service
