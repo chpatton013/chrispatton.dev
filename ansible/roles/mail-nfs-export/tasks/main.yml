@@ -6,15 +6,15 @@
     state: directory
     owner: nobody
     group: nobody
-    mode: 0755
+    mode: 0770
   become: yes
 
 - name: Create Mail NFS export directory
   file:
     path: "{{mail_nfs_export_dir}}"
     state: directory
-    owner: nobody
-    group: nobody
+    owner: root
+    group: root
     mode: 0755
   become: yes
 
