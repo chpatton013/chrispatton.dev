@@ -1,4 +1,4 @@
 ---
 
-whoogle_docker_image: benbusby/whoogle-search
+whoogle_docker_image: benbusby/whoogle-search:1.0
 whoogle_port: 8001
