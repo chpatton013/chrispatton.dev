@@ -1,0 +1,5 @@
+---
+
+postfixadmin_web_docker_image: postfixadmin
+postfixadmin_web_env_file: /root/postfixadmin.env
+postfixadmin_web_port: 8002

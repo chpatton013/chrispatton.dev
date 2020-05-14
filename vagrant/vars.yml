@@ -21,6 +21,18 @@ bookstack_db_user_pass: bookstack
 
 bookstack_web_domain: "bookstack.{{domain}}"
 
+postfixadmin_db_host: 10.0.0.31
+postfixadmin_db_name: postfixadmin
+postfixadmin_db_user_name: postfixadmin
+postfixadmin_db_user_hosts:
+- "localhost"
+- "%"
+postfixadmin_db_user_pass: postfixadmin
+
+postfixadmin_web_smtp_host: 10.0.0.21
+postfixadmin_web_smtp_port: "587"
+postfixadmin_web_domain: "postfixadmin.{{domain}}"
+
 whoogle_domain: "whoogle.{{domain}}"
 
 certbot_domain: "{{domain}}"

@@ -1,0 +1,18 @@
+[Unit]
+Description=PostfixAdmin docker container
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=docker run \
+  --name=postfixadmin_web \
+  --env-file {{postfixadmin_web_env_file}} \
+  --publish {{postfixadmin_web_port}}:80 \
+  --init \
+  --rm \
+  {{postfixadmin_web_docker_image}}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

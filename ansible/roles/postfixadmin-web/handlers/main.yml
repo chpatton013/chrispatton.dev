@@ -1,0 +1,7 @@
+---
+
+- name: Restart PostfixAdmin service
+  systemd:
+    name: postfixadmin.service
+    state: restarted
+  become: yes

@@ -1,0 +1,7 @@
+---
+
+- name: Create PostfixAdmin database and user
+  command:
+    cmd: /usr/bin/mysql --user=root --password=
+    stdin: "{{lookup('template', 'postfixadmin.sql')}}"
+  become: yes
