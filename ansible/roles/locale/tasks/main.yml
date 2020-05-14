@@ -1,0 +1,9 @@
+---
+
+- name: Generate Locale
+  locale_gen:
+    name: "{{item}}"
+  with_items: "{{locales}}"
+  become: yes
+  notify:
+  - Set Locale

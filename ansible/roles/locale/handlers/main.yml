@@ -1,0 +1,6 @@
+---
+
+- name: Set Locale
+  command:
+    cmd: /usr/bin/localectl set-locale LANG={{locale}}
+  become: yes

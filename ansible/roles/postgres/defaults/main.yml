@@ -1,8 +1,5 @@
 ---
 
-lang: en_US
-encoding: UTF-8
-locale: "{{lang}}.{{encoding}}"
 postgres_user: postgres
 postgres_group: postgres
 postgres_rootdir: /var/lib/postgres

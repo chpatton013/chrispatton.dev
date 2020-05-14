@@ -1,0 +1,7 @@
+---
+
+lang: en_US
+encoding: UTF-8
+locale: "{{lang}}.{{encoding}}"
+locales:
+- "{{locale}}"
