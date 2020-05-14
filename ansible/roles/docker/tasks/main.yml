@@ -4,6 +4,13 @@
   pacman:
     name:
     - docker
+    - python-pip
+  become: yes
+
+- name: Install Docker Python packages
+  pip:
+    name:
+    - docker
   become: yes
 
 - name: Start and Enable Docker service
