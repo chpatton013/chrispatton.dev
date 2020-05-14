@@ -1,5 +1,13 @@
 ---
 
+- name: Pull Whoogle docker container
+  docker_image:
+    name: "{{whoogle_docker_image}}"
+    source: pull
+  become: yes
+  notify:
+  - Restart Whoogle service
+
 - name: Render Whoogle unit file
   template:
     src: whoogle.service

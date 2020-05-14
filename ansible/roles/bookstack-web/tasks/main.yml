@@ -1,5 +1,13 @@
 ---
 
+- name: Pull Bookstack docker container
+  docker_image:
+    name: "{{bookstack_web_docker_image}}"
+    source: pull
+  become: yes
+  notify:
+  - Restart Bookstack service
+
 - name: Render Bookstack container env file
   template:
     src: bookstack.env
