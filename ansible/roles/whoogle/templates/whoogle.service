@@ -7,7 +7,7 @@ Type=simple
 User=root
 ExecStart=docker run \
   --name=whoogle-search \
-  --publish {{whoogle_port}}:5000 \
+  --publish 127.0.0.1:{{whoogle_port}}:5000 \
   --init \
   --rm \
   {{whoogle_docker_image}}

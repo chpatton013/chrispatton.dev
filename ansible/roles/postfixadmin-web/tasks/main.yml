@@ -4,6 +4,7 @@
   docker_image:
     name: "{{postfixadmin_web_docker_image}}"
     source: pull
+    force_source: yes
   become: yes
   notify:
   - Restart PostfixAdmin service
