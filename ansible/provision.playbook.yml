@@ -24,7 +24,7 @@
   - bookstack-web
   - postfixadmin-web
   - resume
-  # - whoogle
+  - whoogle
 
 - hosts: filterserver
   roles:
