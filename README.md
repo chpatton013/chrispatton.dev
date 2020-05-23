@@ -35,11 +35,20 @@ vagrant provision # Repeat whenever configuration files change
 
 ## Requirements
 
-### Applications
+You can run `setup.sh` to install the necessary requirements to your system.
+Note that the host system is platform agnostic (as long as it can run Ansible),
+so `setup.sh` will not attempt to install these system packages for you. You
+must use your own package manager to do so.
+
+### 1. System Packages
 
 * `python3`
 * `pip3`
 
-### Python Packages
+### 2. Python Packages
 
-See `requirements.txt`.
+See `requirements.txt`
+
+### 3. Ansible Roles
+
+See `requirements.yml`
