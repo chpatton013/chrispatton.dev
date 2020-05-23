@@ -6,10 +6,31 @@
     - base-devel
   become: yes
 
-- name: Create AUR build root
-  file:
-    path: "{{aur_root_dir}}"
-    state: directory
-    owner: nobody
-    group: nobody
+- name: Create aur_builder user
+  user:
+    name: aur_builder
+    group: wheel
   become: yes
+
+- copy:
+    src: sudoer-aur_builder
+    dest: /etc/sudoers.d/11-install-aur_builder
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Install yay using makepkg
+  aur:
+    name: yay
+    use: makepkg
+    skip_installed: yes
+  become: yes
+  become_user: aur_builder
+
+- name: Upgrade AUR packages
+  aur:
+    upgrade: yes
+    use: yay
+  become: yes
+  become_user: aur_builder

@@ -8,38 +8,11 @@
     system: yes
   become: yes
 
-- name: Install Spamass-Milter build packages
-  pacman:
-    name:
-    - gcc-libs
-    - spamassassin
-    - libmilter # (make)
-    - postfix # (optional)
-  become: yes
-
-- name: Clone Spamass-Milter AUR package
-  git:
-    repo: https://aur.archlinux.org/spamass-milter.git
-    dest: "{{spamass_milter_aur_dir}}"
-    depth: 1
-  become: yes
-  become_user: nobody
-
-- name: Build Spamass-Milter AUR package
-  command:
-    chdir: "{{spamass_milter_aur_dir}}"
-    cmd: /usr/bin/makepkg
-    creates: "{{spamass_milter_aur_pkg}}"
-  environment:
-    SPAMC: /usr/bin/vendor_perl/spamc
-  become: yes
-  become_user: nobody
-
 - name: Install Spamass-Milter AUR package
-  command:
-    cmd: /usr/bin/pacman --upgrade --noconfirm {{spamass_milter_aur_pkg}}
-    creates: /usr/bin/spamass-milter
+  aur:
+    name: spamass-milter
   become: yes
+  become_user: aur_builder
   notify:
   - Restart Spamass-Milter service
 

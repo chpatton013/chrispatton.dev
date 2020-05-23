@@ -73,34 +73,11 @@
 
 - block: # pyzor
 
-  - name: Install Pyzor packages
-    pacman:
-      name:
-      - python2
-      - python2-setuptools # (make)
-    become: yes
-
-  - name: Clone Pyzor AUR package
-    git:
-      repo: https://aur.archlinux.org/pyzor.git
-      dest: "{{spamd_pyzor_aur_dir}}"
-      depth: 1
-    become: yes
-    become_user: nobody
-
-  - name: Build Pyzor AUR package
-    command:
-      chdir: "{{spamd_pyzor_aur_dir}}"
-      cmd: /usr/bin/makepkg
-      creates: "{{spamd_pyzor_aur_pkg}}"
-    become: yes
-    become_user: nobody
-
   - name: Install Pyzor AUR package
-    command:
-      cmd: /usr/bin/pacman --upgrade --noconfirm {{spamd_pyzor_aur_pkg}}
-      creates: /usr/bin/pyzor
+    aur:
+      name: pyzor
     become: yes
+    become_user: aur_builder
     notify:
     - Restart SpamAssassin service
 

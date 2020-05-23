@@ -1,7 +1,5 @@
 ---
 
-spamd_pyzor_aur_dir: "{{aur_root_dir}}/pyzor"
-spamd_pyzor_aur_pkg: "{{spamd_pyzor_aur_dir}}/pyzor-1.0.0-1-any.pkg.tar.xz"
 spamd_etc_dir: /etc/mail/spamassassin
 spamd_data_dir: /var/lib/spamassassin
 spamd_razor_home: "{{spamd_etc_dir}}/razor"
