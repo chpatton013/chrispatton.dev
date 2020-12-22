@@ -1,0 +1,19 @@
+[Unit]
+Description=CrewLink docker container (for Among Us)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=docker run \
+  --name=crew-link \
+  --env ADDRESS={{crewlink_domain}} \
+  --env NAME=AmongFriends \
+  --publish 127.0.0.1:{{crewlink_port}}:9736 \
+  --init \
+  --rm \
+  {{crewlink_docker_image}}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

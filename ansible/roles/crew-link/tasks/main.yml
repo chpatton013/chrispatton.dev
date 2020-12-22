@@ -1,0 +1,53 @@
+---
+
+- name: Pull CrewLink docker container
+  docker_image:
+    name: "{{crewlink_docker_image}}"
+    source: pull
+    force_source: yes
+  become: yes
+  notify:
+  - Restart CrewLink service
+
+- name: Render CrewLink unit file
+  template:
+    src: crew-link.service
+    dest: /etc/systemd/system/crew-link.service
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify:
+  - Reload Systemd daemon
+  - Restart CrewLink service
+
+- name: Start and Enable CrewLink service
+  systemd:
+    name: crew-link.service
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Render CrewLink nginx config file
+  template:
+    src: crew-link.conf
+    dest: "{{nginx_sites_available_dir}}/crew-link.conf"
+    owner: http
+    group: http
+    mode: 0644
+  become: yes
+  notify:
+  - Reload Nginx service
+
+- name: Enable CrewLink site
+  file:
+    src: "{{nginx_sites_available_dir}}/crew-link.conf"
+    path: "{{nginx_sites_enabled_dir}}/crew-link.conf"
+    state: link
+    force: yes
+    owner: http
+    group: http
+    mode: 0777
+  become: yes
+  notify:
+  - Reload Nginx service

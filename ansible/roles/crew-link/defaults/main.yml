@@ -1,0 +1,4 @@
+---
+
+crewlink_docker_image: ottomated/crewlink-server
+crewlink_port: 9736

@@ -1,0 +1,7 @@
+---
+
+- name: Restart CrewLink service
+  systemd:
+    name: crew-link.service
+    state: restarted
+  become: yes

@@ -34,6 +34,7 @@ postfixadmin_web_smtp_port: "587"
 postfixadmin_web_domain: "postfixadmin.{{domain}}"
 
 whoogle_domain: "whoogle.{{domain}}"
+crewlink_domain: "crew-link.{{domain}}"
 
 certbot_domain: "{{domain}}"
 certbot_domains:
